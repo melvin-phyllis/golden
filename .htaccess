@@ -1,0 +1,7 @@
+# Sécurité et déploiement (cPanel)
+# Désactiver l'affichage des répertoires
+Options -Indexes
+# Protection des fichiers sensibles
+<FilesMatch "^\\.env$|^db\\.local\\.php$|composer\\.(json|lock)$">
+    Require all denied
+</FilesMatch>

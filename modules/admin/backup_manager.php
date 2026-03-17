@@ -1,12 +1,9 @@
 <?php
-require_once '../../config/db.php';
-session_start();
+require_once __DIR__ . '/../../config/db.php';
 
-$backup_dir = '../../backups/';
-
-// Créer le dossier s'il n'existe pas
+$backup_dir = ROOT_PATH . '/backups/';
 if (!is_dir($backup_dir)) {
-    mkdir($backup_dir, 0777, true);
+    mkdir($backup_dir, 0755, true);
 }
 
 // Récupérer la liste des fichiers de sauvegarde existants
@@ -84,7 +81,7 @@ array_multisort(array_map('filemtime', $files), SORT_DESC, $files);
         <td class="p-5 text-zinc-500"><?= round(filesize($file) / 1024, 1) ?> KB</td>
         <td class="p-5 text-zinc-500"><?= date("d/m/Y H:i", filemtime($file)) ?></td>
         <td class="p-5 text-right space-x-4">
-            <a href="<?= $file ?>" download class="text-[#D4AF37] hover:text-white transition" title="Télécharger">
+            <a href="download_backup.php?file=<?= urlencode($filename) ?>" class="text-[#D4AF37] hover:text-white transition" title="Télécharger">
                 <i class="fa-solid fa-download"></i>
             </a>
             

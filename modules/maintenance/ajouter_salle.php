@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $img = "default_salle.jpg";
     if (!empty($_FILES['image']['name'])) {
         $img = time() . "_" . $_FILES['image']['name'];
-        move_uploaded_file($_FILES['image']['tmp_name'], "../../assets/img/salles/" . $img);
+        $uploadDir = ROOT_PATH . '/assets/img/salles/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $img);
     }
 
     $stmt = $pdo->prepare("INSERT INTO salles (nom_salle, type_salle, capacite, tarif_heure, tarif_jour, image_salle) VALUES (?, ?, ?, ?, ?, ?)");

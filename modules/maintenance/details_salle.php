@@ -34,7 +34,7 @@ if (!$salle) { echo "Salle introuvable"; exit(); }
             
             <div class="space-y-6">
                 <div class="rounded-[2.5rem] overflow-hidden border border-zinc-800 h-80 shadow-2xl">
-                    <img src="../../assets/img/salles/<?= $salle['image_salle'] ?>" class="w-full h-full object-cover">
+                    <img src="<?= htmlspecialchars(BASE_URL . 'assets/img/salles/' . $salle['image_salle']) ?>" class="w-full h-full object-cover">
                 </div>
                 
                 <div class="bg-zinc-900/50 p-6 rounded-[2rem] border border-zinc-800">

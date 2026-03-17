@@ -43,8 +43,8 @@ $pannes = $pdo->query($sql)->fetchAll();
             <div class="bg-zinc-900 p-6 rounded-3xl gold-border flex justify-between items-center <?= ($panne['statut'] == 'Terminé') ? 'statut-Terminé' : '' ?>">
                 <div class="flex items-center gap-4">
                     <?php if(!empty($panne['image_preuve'])): ?>
-                        <a href="../../uploads/maintenance/<?= $panne['image_preuve'] ?>" target="_blank" class="block w-16 h-16 rounded-xl overflow-hidden border border-zinc-700">
-                            <img src="../../uploads/maintenance/<?= $panne['image_preuve'] ?>" class="w-full h-full object-cover hover:scale-110 transition">
+                        <a href="<?= htmlspecialchars(BASE_URL . 'uploads/maintenance/' . $panne['image_preuve']) ?>" target="_blank" class="block w-16 h-16 rounded-xl overflow-hidden border border-zinc-700">
+                            <img src="<?= htmlspecialchars(BASE_URL . 'uploads/maintenance/' . $panne['image_preuve']) ?>" class="w-full h-full object-cover hover:scale-110 transition">
                         </a>
                     <?php else: ?>
                         <div class="w-16 h-16 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-600">

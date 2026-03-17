@@ -13,13 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['chambre_id'])) {
     if (isset($_FILES['photo_panne']) && $_FILES['photo_panne']['error'] == 0) {
         $extension = pathinfo($_FILES['photo_panne']['name'], PATHINFO_EXTENSION);
         $nom_photo = "panne_" . time() . "." . $extension;
-        $destination = "../../uploads/maintenance/" . $nom_photo;
-        
-        if (!is_dir("../../uploads/maintenance/")) {
-            mkdir("../../uploads/maintenance/", 0777, true);
-        }
-        
-        move_uploaded_file($_FILES['photo_panne']['tmp_name'], $destination);
+        $uploadDir = ROOT_PATH . '/uploads/maintenance/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        move_uploaded_file($_FILES['photo_panne']['tmp_name'], $uploadDir . $nom_photo);
     }
 
     // Insertion sécurisée

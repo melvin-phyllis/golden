@@ -49,7 +49,7 @@ include '../layout/header.php';
 
                     <!-- IMAGE -->
                     <td class="p-3">
-                        <img src="../../assets/img/salles/<?= htmlspecialchars($salle['image_salle']) ?>" 
+                        <img src="<?= htmlspecialchars(BASE_URL . 'assets/img/salles/' . $salle['image_salle']) ?>" 
                         class="w-16 h-12 object-cover rounded-lg">
                     </td>
 

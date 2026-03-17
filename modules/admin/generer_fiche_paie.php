@@ -1,6 +1,6 @@
 <?php
 require_once '../../config/db.php';
-require_once '../../vendor/dompdf/autoload.inc.php'; 
+require_once __DIR__ . '/../../vendor/autoload.php'; 
 session_start();
 
 use Dompdf\Dompdf;

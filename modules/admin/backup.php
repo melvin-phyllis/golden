@@ -1,29 +1,35 @@
 <?php
-// Configuration
-$host = 'localhost';
-$user = 'root';
-$pass = ''; // Ton mot de passe XAMPP (vide par défaut)
-$dbname = 'management'; // Le nom de ta base de données
-$backup_file = '../../backups/sauvegarde_' . date('Y-m-d_H-i-s') . '.sql';
+require_once __DIR__ . '/../../config/db.php';
 
-// Créer le dossier backups s'il n'existe pas
-if (!is_dir('../../backups')) {
-    mkdir('../../backups', 0777, true);
+$c = $GLOBALS['db_credentials'];
+$backup_dir = ROOT_PATH . '/backups/';
+if (!is_dir($backup_dir)) {
+    mkdir($backup_dir, 0755, true);
 }
 
-// Commande pour Windows (XAMPP)
-// Cette ligne demande à MySQL d'exporter toutes les tables
-$command = "C:\xampp\mysql\bin\mysqldump.exe --user=$user --password=$pass --host=$host $dbname > $backup_file";
+$backup_file = $backup_dir . 'sauvegarde_' . date('Y-m-d_H-i-s') . '.sql';
+$user = $c['user'];
+$pass = $c['password'];
+$host = $c['host'];
+$dbname = $c['dbname'];
+$file = str_replace('\\', '/', $backup_file);
 
-system($command, $output);
-
-if ($output === 0) {
-    echo "✅ Sauvegarde réussie ! Fichier : " . $backup_file;
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+    $mysqldump = 'C:\\xampp\\mysql\\bin\\mysqldump.exe';
+    if (!file_exists($mysqldump)) {
+        $mysqldump = 'mysqldump';
+    }
+    $command = sprintf('"%s" --user=%s --password=%s --host=%s %s > %s',
+        $mysqldump, escapeshellarg($user), escapeshellarg($pass), escapeshellarg($host), escapeshellarg($dbname), escapeshellarg($file));
 } else {
-    echo "❌ Erreur lors de la sauvegarde. Vérifiez le chemin de mysqldump.";
+    $command = sprintf('mysqldump --user=%s --password=%s --host=%s %s > %s',
+        escapeshellarg($user), escapeshellarg($pass), escapeshellarg($host), escapeshellarg($dbname), escapeshellarg($file));
 }
-?>
 
+exec($command, $output, $return_var);
 
-
-
+if ($return_var === 0) {
+    echo "✅ Sauvegarde réussie ! Fichier : " . basename($backup_file);
+} else {
+    echo "❌ Erreur lors de la sauvegarde. Vérifiez que mysqldump est disponible sur le serveur.";
+}

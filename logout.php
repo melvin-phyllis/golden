@@ -1,7 +1,7 @@
 <?php
+require_once __DIR__ . '/config/paths.php';
 session_start();
 session_unset();
 session_destroy();
-header("Location: ../../login.php");
-exit();
-?>
+header('Location: ' . rtrim(BASE_URL, '/') . '/login.php');
+exit;

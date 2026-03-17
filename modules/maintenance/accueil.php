@@ -198,7 +198,7 @@ try {
             <video class="w-full h-full object-cover" autoplay loop muted playsinline>
 
                 <!-- c'est parce que j'ai pas hotel_promo.mp4 c'est pour j'ai sauter pour un deuxieme  -->
-                <source src="../../assets/videos/hotel_promo.mp4" type="video/mp4">
+                <source src="<?= htmlspecialchars(BASE_URL) ?>assets/videos/hotel_promo.mp4" type="video/mp4">
 
                 <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
 

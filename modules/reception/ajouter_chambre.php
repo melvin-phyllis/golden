@@ -36,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $folder = ($type_id == 1) ? 'suite' : 'standard';
             $prefixe = ($type_id == 1) ? 'suite_' : 'standard_';
             
-            // Chemin final : assets/img/suite/suite_105.jpg par exemple
-            $uploadDir = "../../assets/img/" . $folder . "/";
+            $uploadDir = ROOT_PATH . '/assets/img/' . $folder . '/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             $fileName = $prefixe . $numero . ".jpg";
             $targetPath = $uploadDir . $fileName;
 

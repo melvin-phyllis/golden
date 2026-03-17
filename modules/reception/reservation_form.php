@@ -104,13 +104,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php 
                  $folder = ($chambre['type_id'] == 1) ? "suites" : "standard";
-                $img = "../../assets/img/$folder/" . $chambre['numero_chambre'] . ".jpg";
+                $img = BASE_URL . "assets/img/$folder/" . $chambre['numero_chambre'] . ".jpg";
             ?>
 
             <div class="h-40 rounded-2xl overflow-hidden mb-4">
 
                 <img src="<?php echo $img;?>"
-                onerror="this.src='../../assets/img/default.jpg'"
+                onerror="this.src='<?= BASE_URL ?>assets/img/default.jpg'"
                 class="w-full h-full object-cover">
 
             </div>

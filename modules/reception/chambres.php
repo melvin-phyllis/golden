@@ -82,7 +82,7 @@ $chambres = $pdo->query($query)->fetchAll();
             }
 
            // image basée sur le numéro de chambre
-           $imgURL = "../../assets/img/".$folder."/".$ch['numero_chambre'].".jpg";
+           $imgURL = BASE_URL . "assets/img/".$folder."/".$ch['numero_chambre'].".jpg";
 
            $statusColor = ($ch['statut'] == 'Libre') ? 'text-green-400' : 'text-red-500';
         ?>
@@ -91,7 +91,7 @@ $chambres = $pdo->query($query)->fetchAll();
             <div class="room-card rounded-2xl overflow-hidden gold-border p-4">
                 <div class="h-40 rounded-xl overflow-hidden mb-4 relative">
                     <img src="<?php echo $imgURL; ?>" 
-                         onerror="this.src='../../assets/img/default.jpg';" 
+                         onerror="this.src='<?= BASE_URL ?>assets/img/default.jpg';" 
                          class="w-full h-full object-cover">
                     <div class="absolute top-2 right-2 bg-black/80 px-2 py-1 rounded text-[10px] font-bold <?php echo $statusColor; ?>">
                         ● <?php echo strtoupper($ch['statut']); ?>

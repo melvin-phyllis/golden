@@ -13,12 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Gestion du justificatif (Upload)
     $justificatif_path = null;
     if (isset($_FILES['justificatif']) && $_FILES['justificatif']['error'] == 0) {
-        $upload_dir = '../../uploads/factures/';
-        if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+        $upload_dir = ROOT_PATH . '/uploads/factures/';
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
 
         $filename = time() . '_' . basename($_FILES['justificatif']['name']);
-        $justificatif_path = $upload_dir . $filename;
-        move_uploaded_file($_FILES['justificatif']['tmp_name'], $justificatif_path);
+        $justificatif_path = 'uploads/factures/' . $filename;
+        move_uploaded_file($_FILES['justificatif']['tmp_name'], $upload_dir . $filename);
     }
 
     try {

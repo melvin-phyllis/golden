@@ -62,7 +62,7 @@
         </nav>
 
         <div class="p-6 border-t border-zinc-900">
-            <a href="../../logout.php" class="flex items-center gap-4 px-4 py-3 text-red-900 hover:text-red-500 transition text-[10px] uppercase font-bold">
+            <a href="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/logout.php') ?>" class="flex items-center gap-4 px-4 py-3 text-red-900 hover:text-red-500 transition text-[10px] uppercase font-bold">
                 <i class="fa-solid fa-power-off"></i> Déconnexion
             </a>
         </div>

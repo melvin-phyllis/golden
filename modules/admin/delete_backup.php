@@ -1,10 +1,9 @@
 <?php
-require_once '../../config/db.php';
-session_start();
+require_once __DIR__ . '/../../config/db.php';
 
 if (isset($_GET['file'])) {
-    $filename = basename($_GET['file']); // Sécurité : évite de sortir du dossier backups
-    $file_path = "../../backups/" . $filename;
+    $filename = basename($_GET['file']);
+    $file_path = ROOT_PATH . '/backups/' . $filename;
 
     if (file_exists($file_path)) {
         unlink($file_path); // Supprime le fichier

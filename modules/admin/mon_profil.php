@@ -34,7 +34,7 @@ $user = $stmt->fetch();
             <div class="md:col-span-1 space-y-6">
                 <div class="bg-zinc-900/40 p-6 rounded-[2.5rem] border border-zinc-800 text-center">
                     <div class="relative inline-block group">
-                        <img src="<?= $user['photo'] ?? '../../assets/img/default-avatar.png' ?>" 
+                        <img src="<?= htmlspecialchars(BASE_URL . ($user['photo'] ?? 'assets/img/default-avatar.png')) ?>" 
                              class="w-32 h-32 rounded-full object-cover border-2 border-[#D4AF37] mb-4 mx-auto">
                         <form action="update_photo.php" method="POST" enctype="multipart/form-data" class="mt-2">
                             <label class="cursor-pointer text-[10px] text-[#D4AF37] uppercase font-bold hover:text-white transition">

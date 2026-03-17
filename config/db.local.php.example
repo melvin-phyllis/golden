@@ -1,0 +1,10 @@
+<?php
+/**
+ * Copier ce fichier en db.local.php et renseigner les identifiants.
+ * db.local.php n'est pas versionné (sécurité).
+ * Sur cPanel : utiliser le nom de BDD, l'utilisateur et le mot de passe fournis par l'hébergeur.
+ */
+$host     = 'localhost';
+$dbname   = 'management';
+$username = 'root';
+$password = '';

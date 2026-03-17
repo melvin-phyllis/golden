@@ -31,12 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $folder = ($type_id == 1) ? 'suite' : 'standard';
         $prefixe = ($type_id == 1) ? 'suite_' : 'standard_';
         
-        // On supprime l'ancienne image si le numéro a changé
-        $oldPath = "../../assets/img/$folder/{$prefixe}{$room['numero_chambre']}.jpg";
-        if(file_exists($oldPath)) unlink($oldPath);
-
-        // On enregistre la nouvelle
-        move_uploaded_file($_FILES['nouvelle_image']['tmp_name'], "../../assets/img/$folder/{$prefixe}{$nouveau_num}.jpg");
+        $assetsDir = ROOT_PATH . "/assets/img/$folder/";
+        $oldPath = $assetsDir . "{$prefixe}{$room['numero_chambre']}.jpg";
+        if (file_exists($oldPath)) unlink($oldPath);
+        move_uploaded_file($_FILES['nouvelle_image']['tmp_name'], $assetsDir . "{$prefixe}{$nouveau_num}.jpg");
     }
 
     header('Location: chambres.php');
