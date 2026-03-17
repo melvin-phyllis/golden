@@ -104,24 +104,25 @@ Si SSH n’est pas disponible : uploader un dossier `vendor/` déjà généré e
 
 ### 7. Exécuter les migrations (créer les tables)
 
-**En SSH (recommandé)** :
+**Option A – Script PHP (recommandé, utilise `config/db.local.php`)**  
+
+Aucun mot de passe à taper : le script lit les identifiants dans `config/db.local.php`.
+
+```bash
+cd ~/public_html/golden
+php migrate.php
+```
+
+**Option B – Ligne de commande MySQL** :
 
 ```bash
 cd ~/public_html/golden
 mysql -h localhost -u Cpanel_User_Db -p Cpanel_User_Management < install_tables.sql
 ```
 
-(Remplacer `Cpanel_User_Db` et `Cpanel_User_Management` par les noms réels. Le mot de passe sera demandé.)
+(Remplacer par les noms réels. Le mot de passe sera demandé.)
 
-**Avec variables d’environnement** (pour ne pas mettre le mot de passe en clair dans l’historique) :
-
-```bash
-cd ~/public_html/golden
-DB_USER="cpanel_user_db" DB_PASS="ton_mot_de_passe" DB_NAME="cpanel_user_management"
-mysql -h localhost -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" < install_tables.sql
-```
-
-**Sans SSH – via phpMyAdmin** :
+**Option C – phpMyAdmin** (sans SSH) :
 
 1. cPanel → **phpMyAdmin**.
 2. Sélectionner la base créée à l’étape 2.
@@ -212,8 +213,8 @@ cp config/db.local.php.example config/db.local.php
 # 3. Composer
 composer install --no-dev
 
-# 4. Migrations
-mysql -h localhost -u TON_USER -p TON_NOM_BASE < install_tables.sql
+# 4. Migrations (utilise config/db.local.php)
+php migrate.php
 
 # 5. Premier admin (remplacer HASH par le résultat de la commande ci-dessous)
 # php -r "echo password_hash('Admin123!', PASSWORD_DEFAULT);"
