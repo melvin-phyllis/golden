@@ -1,6 +1,6 @@
 <?php
 /**
- * Migrations SQL – utilise les identifiants de config/db.local.php.
+ * Migrations SQL – utilise la même config que le site (config/db.php → db.local.php).
  * À lancer en CLI : php migrate.php
  * Ne pas appeler depuis le navigateur (sécurité).
  */
@@ -10,24 +10,15 @@ if (php_sapi_name() !== 'cli') {
 }
 
 $configDir = __DIR__ . '/config';
-
-$host     = 'localhost';
-$dbname   = 'management';
-$username = 'root';
-$password = '';
-
 $localConfig = $configDir . '/db.local.php';
-if (file_exists($localConfig)) {
-    require $localConfig;
-}
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    fwrite(STDERR, "Erreur de connexion : " . $e->getMessage() . "\n");
+if (!file_exists($localConfig)) {
+    fwrite(STDERR, "Fichier config/db.local.php introuvable.\n");
+    fwrite(STDERR, "Copiez config/db.local.php.example en config/db.local.php et renseignez les identifiants MySQL.\n");
     exit(1);
 }
+
+require_once $configDir . '/db.php';
 
 $sqlFile = __DIR__ . '/install_tables.sql';
 if (!is_readable($sqlFile)) {
