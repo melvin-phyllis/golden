@@ -135,26 +135,32 @@ mysql -h localhost -u Cpanel_User_Db -p Cpanel_User_Management < install_tables.
 
 Les tables sont vides : il faut créer un utilisateur admin pour se connecter.
 
-**Méthode 1 – Ligne de commande PHP (SSH)**  
+**Option A – Script PHP (recommandé, utilise `config/db.local.php`)**  
 
-Générer un hash pour le mot de passe (ex. `Admin123!`) :
-
-```bash
-php -r "echo password_hash('Admin123!', PASSWORD_DEFAULT);"
-```
-
-Copier le résultat (ex. `$2y$10$...`). Puis insérer l’admin dans MySQL :
+Aucun mot de passe à taper. Le script crée un admin avec **admin@ya-consulting.com** / **Admin123!**.
 
 ```bash
-mysql -h localhost -u Cpanel_User_Db -p Cpanel_User_Management -e "
-INSERT INTO utilisateurs (nom, email, mot_de_passe, role_id, salaire_base, planning_horaire, statut)
-VALUES ('Administrateur', 'admin@tondomaine.com', 'COLLER_LE_HASH_ICI', 1, 0, 'Lun-Ven 8h-17h', 'Actif');
-"
+cd ~/public_html/golden
+php create_admin.php
 ```
 
-(Remplacer `COLLER_LE_HASH_ICI` par le hash généré, et les noms utilisateur/base si besoin.)
+Puis supprimer le fichier : `rm create_admin.php`
 
-**Méthode 2 – phpMyAdmin**  
+**Option B – Ligne de commande MySQL**  
+
+Générer le hash (guillemets simples pour éviter les soucis avec `!` en bash) :
+
+```bash
+php -r 'echo password_hash("Admin123!", PASSWORD_DEFAULT);'
+```
+
+Puis insérer l’admin (remplacer USER, BASE et HASH) :
+
+```bash
+mysql -h localhost -u USER -p BASE -e "INSERT INTO utilisateurs (nom, email, mot_de_passe, role_id, statut) VALUES ('Administrateur', 'admin@tondomaine.com', 'HASH', 1, 'Actif');"
+```
+
+**Option C – phpMyAdmin**  
 
 1. Générer le hash en SSH avec la commande `php -r "..."` ci-dessus (ou sur une machine locale en PHP 8.1+).
 2. Dans phpMyAdmin, ouvrir la base → table **`utilisateurs`** → onglet **Insérer**.
